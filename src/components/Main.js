@@ -1,15 +1,15 @@
 function Main() {
     return (
 <main classNameName="content">
-        <section classNameName="profile">
-          <div classNameName="profile__wrapper">
-            <div classNameName="profile__avatar-wrapper"><img
+        <section className="profile">
+          <div className="profile__wrapper">
+            <div className="profile__avatar-wrapper"><img
               src="#"
               alt="аватар пользователя."
-              classNameName="profile__avatar"
+              className="profile__avatar"
             /></div>
-            <div classNameName="profile__info">
-              <div classNameName="profile__name-wrapper">
+            <div className="profile__info">
+              <div className="profile__name-wrapper">
                 <h1 className="profile__name"></h1>
                 <button
                   type="button"

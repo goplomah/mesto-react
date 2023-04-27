@@ -4,12 +4,12 @@ import Footer from './Footer.js';
 
 function App() {
   return (
-    <div classNameName='root'>
-      <div classNameName='page'>
+    <div className='root'>
+      <div className='page'>
         <Header />
         <Main />
         <Footer />
-        <div className="popup popup_type_edit">
+        {/* <div className="popup popup_type_edit">
         <div className="popup__container popup__container_type_edit">
           <button
             type="button"
@@ -124,7 +124,7 @@ function App() {
             <button type="submit" className="form__send form__send_disabled">Сохранить</button>
           </form>
         </div>
-      </div>
+      </div> */}
       </div>
     </div>
   );
