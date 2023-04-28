@@ -1,6 +1,6 @@
 # mesto-react
 
-![Иллюстрация к проекту]('../src/images/mesto-for-readme.png')
+![Иллюстрация к проекту]('./src/images/mesto-for-readme.png')
 
 ## Проектная работа №10 (портирование проектной работы №9 на React)
 
