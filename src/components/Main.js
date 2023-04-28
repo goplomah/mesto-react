@@ -22,6 +22,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitCard()])
@@ -29,12 +30,13 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
     setUserName(me.name);
     setUserDescription(me.about);
     setUserAvatar(me.avatar);
+    setCards(cards);
     // userId = me._id;
     // userInfo.setUserInfo(me);
     // rendererSection.rendererItems(cards);
   })
   .catch((err) => console.log(`Упс...Ошибка получения данных с сервера: ${err}`));
-  });
+  }, []);
 
     return (
 <main className="content">
@@ -76,7 +78,30 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
           aria-label="сетка карточек красивых мест России."
         >
           <ul className="places__cards">
-            <template className="template__card">
+            {cards.map((card) => (
+              <li className="places__item">
+                <figure className="places__image-wrapper">
+                  <img src={card.link} alt={card.name} className="places__image" />
+                  <figcaption className="places__discription">
+                    <p className="places__text">{card.name}</p>
+                    <div className="places__wrapper-like">
+                      <button
+                      type="button"
+                      className="places__button-like"
+                      aria-label="кнопка лайка"
+                    ></button>
+                    <p className="places__like-counter">{card.likes.length}</p>
+                  </div>
+                  </figcaption>
+                  <button
+                    type="button"
+                    className="places__button-trash"
+                    aria-label="кнопка удаления"
+                  ></button>
+                </figure>
+              </li>
+            ))}
+            {/* <template className="template__card">
               <li className="places__item">
                 <figure className="places__image-wrapper">
                   <img src="#" alt="" className="places__image" />
@@ -98,7 +123,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
                   ></button>
                 </figure>
               </li>
-            </template>
+            </template> */}
           </ul>
         </section>
       </main>
