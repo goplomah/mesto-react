@@ -1,4 +1,4 @@
-function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onClose}) {
   // const handleAddPlaceClick = () => {
   //   document.querySelector('.button-add').addEventListener('click', () => {
   //     document.querySelector('.popup_type_add').classList.add('popup_opened');

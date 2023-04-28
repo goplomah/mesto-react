@@ -22,6 +22,12 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
+  const closeAllPopups = () => {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+  }
+
   return (
     <div className='root'>
       <div className='page'>
@@ -30,6 +36,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onClose={closeAllPopups}
         />
         <Footer />
         <PopupWithForm 
@@ -37,6 +44,7 @@ function App() {
           name='edit'
           isOpen={isEditProfilePopupOpen}
           submitButtonText='Сохранить'
+          onClose={closeAllPopups}
         >
           <input
               id="name-input"
@@ -66,6 +74,7 @@ function App() {
           name='add'
           isOpen={isAddPlacePopupOpen}
           submitButtonText='Создать'
+          onClose={closeAllPopups}
         >
           <input
             id="add-title-input"
@@ -119,6 +128,7 @@ function App() {
         name="avatar"
         submitButtonText='Сохранить'
         isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
       >
         <input
             id="avatar-patch-url-input"
