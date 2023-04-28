@@ -1,24 +1,9 @@
 import { useEffect, useState } from "react";
 import api from '../utils/Api.js';
+import Card from './Card.js';
 
 function Main({onEditProfile, onAddPlace, onEditAvatar}) {
-  // const handleAddPlaceClick = () => {
-  //   document.querySelector('.button-add').addEventListener('click', () => {
-  //     document.querySelector('.popup_type_add').classList.add('popup_opened');
-  //   })
-  // };
 
-  // const handleEditProfileClick = () => {
-  //   document.querySelector('.button-edit').addEventListener('click', () => {
-  //     document.querySelector('.popup_type_edit').classList.add('popup_opened');
-  //   })
-  // };
-
-  // const handleEditAvatarClick = () => {
-  //   document.querySelector('.profile__avatar-wrapper').addEventListener('click', () => {
-  //     document.querySelector('.popup_type_avatar').classList.add('popup_opened');
-  //   })
-  // };
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
@@ -31,9 +16,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
     setUserDescription(me.about);
     setUserAvatar(me.avatar);
     setCards(cards);
-    // userId = me._id;
-    // userInfo.setUserInfo(me);
-    // rendererSection.rendererItems(cards);
   })
   .catch((err) => console.log(`Упс...Ошибка получения данных с сервера: ${err}`));
   }, []);
@@ -43,7 +25,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
         <section className="profile">
           <div className="profile__wrapper">
             <div className="profile__avatar-wrapper"
-            // onClick={handleEditAvatarClick}
             onClick={onEditAvatar}
             >
               <img
@@ -57,7 +38,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
                 <button
                   type="button"
                   className="button-edit"
-                  // onClick={handleEditProfileClick}
                   onClick={onEditProfile}
                   aria-label="кнопка редактирования"
                 ></button>
@@ -69,7 +49,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
             type="button"
             className="button-add"
             aria-label="кнопка добавления карточки на страницу"
-            // onClick={handleAddPlaceClick}
             onClick={onAddPlace}
           ></button>
         </section>
@@ -79,51 +58,10 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
         >
           <ul className="places__cards">
             {cards.map((card) => (
-              <li className="places__item">
-                <figure className="places__image-wrapper">
-                  <img src={card.link} alt={card.name} className="places__image" />
-                  <figcaption className="places__discription">
-                    <p className="places__text">{card.name}</p>
-                    <div className="places__wrapper-like">
-                      <button
-                      type="button"
-                      className="places__button-like"
-                      aria-label="кнопка лайка"
-                    ></button>
-                    <p className="places__like-counter">{card.likes.length}</p>
-                  </div>
-                  </figcaption>
-                  <button
-                    type="button"
-                    className="places__button-trash"
-                    aria-label="кнопка удаления"
-                  ></button>
-                </figure>
-              </li>
+              <Card
+              card={card}
+              />
             ))}
-            {/* <template className="template__card">
-              <li className="places__item">
-                <figure className="places__image-wrapper">
-                  <img src="#" alt="" className="places__image" />
-                  <figcaption className="places__discription">
-                    <p className="places__text"></p>
-                    <div className="places__wrapper-like">
-                      <button
-                      type="button"
-                      className="places__button-like"
-                      aria-label="кнопка лайка"
-                    ></button>
-                    <p className="places__like-counter"></p>
-                  </div>
-                  </figcaption>
-                  <button
-                    type="button"
-                    className="places__button-trash"
-                    aria-label="кнопка удаления"
-                  ></button>
-                </figure>
-              </li>
-            </template> */}
           </ul>
         </section>
       </main>
