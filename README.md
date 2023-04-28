@@ -40,4 +40,4 @@
 
 ---
 
-[ приложение можно посмотреть тут](https://goplomah.github.io/mesto/)
+[ приложение можно посмотреть тут](https://goplomah.github.io/mesto-react/)
