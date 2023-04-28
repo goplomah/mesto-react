@@ -1,12 +1,4 @@
 function Main() {
-  // const handleEditAvatarClick = document.querySelector('.profile__avatar');
-  // const handleEditProfileClick = document.querySelector('.button-edit').addEventListener('click', () => {
-  //   document.querySelector('.popup_type_add').classList.add('.popup_opened');
-  // });
-  // const handleAddPlaceClick = document.querySelector('.button-add');
-  // const handleEditProfileClick = () => {
-  //   document.querySelector('.popup_type_add').classList.add('popup_opened');
-  // };
   const handleAddPlaceClick = () => {
     document.querySelector('.button-add').addEventListener('click', () => {
       document.querySelector('.popup_type_add').classList.add('popup_opened');
