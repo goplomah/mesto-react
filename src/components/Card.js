@@ -1,8 +1,18 @@
-function Card({card}) {
+function Card({card, onCardClick}) {
+
+    const handleCardClick = () => {
+        onCardClick(card);
+    };
+
     return (
         <li className="places__item">
                 <figure className="places__image-wrapper">
-                  <img src={card.link} alt={card.name} className="places__image" />
+                  <img 
+                  src={card.link}
+                  alt={card.name}
+                  className="places__image"
+                  onClick={handleCardClick}
+                  />
                   <figcaption className="places__discription">
                     <p className="places__text">{card.name}</p>
                     <div className="places__wrapper-like">

@@ -9,6 +9,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState({});
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
@@ -22,10 +23,15 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  }
+
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard({});
   }
 
   return (
@@ -37,6 +43,7 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         onClose={closeAllPopups}
+        onCardClick={handleCardClick}
         />
         <Footer />
         <PopupWithForm 
@@ -97,32 +104,17 @@ function App() {
             />
             <span className="form__input-error add-url-input-error"></span>
         </PopupWithForm>
-      <div className="popup popup_type_image">
-        <div className="popup__container popup__container_type_image">
-          <button
-            type="button"
-            className="popup__close-btn"
-            aria-label="кнопка закрытия модального окна"
-          ></button>
-          <figure className="popup__image-wrapper">
-            <img src="#" alt="" className="popup__image" />
-            <figcaption className="popup__discription">
-              <p className="popup__text"></p>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-      <div className="popup popup_type_delete">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close-btn"
-            aria-label="кнопка закрытия модального окна"
-          ></button>
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form className="form form_type_delete"><button className="form__send">Да</button></form>
-        </div>
-      </div>
+      <ImagePopup
+      name="image"
+      onClose={closeAllPopups}
+      card={selectedCard}
+      />
+        <PopupWithForm
+        name="delete"
+        onClose={closeAllPopups}
+        title="Вы уверены?"
+        submitButtonText='Да'
+        />
       <PopupWithForm
         title="Обновить аватар"
         name="avatar"

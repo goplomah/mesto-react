@@ -1,16 +1,17 @@
-function ImagePopup({name}) {
+function ImagePopup({name, card, onClose}) {
     return (
-        <div className={`popup popup_type_${name}`}>
+        <div className={`popup popup_type_${name} ${card.name ? "popup_opened" : ""}`}>
         <div className={`popup__container popup__container_type_${name}`}>
           <button
             type="button"
             className="popup__close-btn"
             aria-label={"кнопка закрытия модального окна"}
+            onClick={onClose}
           ></button>
           <figure className="popup__image-wrapper">
-            <img src="#" alt="" className="popup__image" />
+            <img src={card.link} alt={card.name} className="popup__image" />
             <figcaption className="popup__discription">
-              <p className="popup__text"></p>
+              <p className="popup__text">{card.name}</p>
             </figcaption>
           </figure>
         </div>

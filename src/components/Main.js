@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from '../utils/Api.js';
 import Card from './Card.js';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose}) {
 
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
@@ -59,7 +59,9 @@ function Main({onEditProfile, onAddPlace, onEditAvatar}) {
           <ul className="places__cards">
             {cards.map((card) => (
               <Card
+              key={card._id}
               card={card}
+              onCardClick={onCardClick}
               />
             ))}
           </ul>
