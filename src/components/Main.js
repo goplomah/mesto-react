@@ -1,4 +1,7 @@
-function Main({onEditProfile, onAddPlace, onEditAvatar, onClose}) {
+import { useEffect, useState } from "react";
+import api from '../utils/Api.js';
+
+function Main({onEditProfile, onAddPlace, onEditAvatar}) {
   // const handleAddPlaceClick = () => {
   //   document.querySelector('.button-add').addEventListener('click', () => {
   //     document.querySelector('.popup_type_add').classList.add('popup_opened');
@@ -16,7 +19,22 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onClose}) {
   //     document.querySelector('.popup_type_avatar').classList.add('popup_opened');
   //   })
   // };
-  
+  const [userName, setUserName] = useState('');
+  const [userDescription, setUserDescription] = useState('');
+  const [userAvatar, setUserAvatar] = useState('');
+
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitCard()])
+  .then(([me, cards]) => {
+    setUserName(me.name);
+    setUserDescription(me.about);
+    setUserAvatar(me.avatar);
+    // userId = me._id;
+    // userInfo.setUserInfo(me);
+    // rendererSection.rendererItems(cards);
+  })
+  .catch((err) => console.log(`Упс...Ошибка получения данных с сервера: ${err}`));
+  });
 
     return (
 <main className="content">
@@ -27,13 +45,13 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onClose}) {
             onClick={onEditAvatar}
             >
               <img
-              src="#"
+              src={userAvatar}
               alt="аватар пользователя."
               className="profile__avatar"
             /></div>
             <div className="profile__info">
               <div className="profile__name-wrapper">
-                <h1 className="profile__name"></h1>
+                <h1 className="profile__name">{userName}</h1>
                 <button
                   type="button"
                   className="button-edit"
@@ -42,7 +60,7 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onClose}) {
                   aria-label="кнопка редактирования"
                 ></button>
               </div>
-              <p className="profile__job"></p>
+              <p className="profile__job">{userDescription}</p>
             </div>
           </div>
           <button
