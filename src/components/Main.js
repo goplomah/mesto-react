@@ -1,28 +1,31 @@
-function Main() {
-  const handleAddPlaceClick = () => {
-    document.querySelector('.button-add').addEventListener('click', () => {
-      document.querySelector('.popup_type_add').classList.add('popup_opened');
-    })
-  };
+function Main({onEditProfile, onAddPlace, onEditAvatar}) {
+  // const handleAddPlaceClick = () => {
+  //   document.querySelector('.button-add').addEventListener('click', () => {
+  //     document.querySelector('.popup_type_add').classList.add('popup_opened');
+  //   })
+  // };
 
-  const handleEditProfileClick = () => {
-    document.querySelector('.button-edit').addEventListener('click', () => {
-      document.querySelector('.popup_type_edit').classList.add('popup_opened');
-    })
-  };
+  // const handleEditProfileClick = () => {
+  //   document.querySelector('.button-edit').addEventListener('click', () => {
+  //     document.querySelector('.popup_type_edit').classList.add('popup_opened');
+  //   })
+  // };
 
-  const handleEditAvatarClick = () => {
-    document.querySelector('.profile__avatar-wrapper').addEventListener('click', () => {
-      document.querySelector('.popup_type_avatar').classList.add('popup_opened');
-    })
-  };
+  // const handleEditAvatarClick = () => {
+  //   document.querySelector('.profile__avatar-wrapper').addEventListener('click', () => {
+  //     document.querySelector('.popup_type_avatar').classList.add('popup_opened');
+  //   })
+  // };
+  
 
     return (
 <main className="content">
         <section className="profile">
           <div className="profile__wrapper">
             <div className="profile__avatar-wrapper"
-            onClick={handleEditAvatarClick}>
+            // onClick={handleEditAvatarClick}
+            onClick={onEditAvatar}
+            >
               <img
               src="#"
               alt="аватар пользователя."
@@ -34,7 +37,8 @@ function Main() {
                 <button
                   type="button"
                   className="button-edit"
-                  onClick={handleEditProfileClick}
+                  // onClick={handleEditProfileClick}
+                  onClick={onEditProfile}
                   aria-label="кнопка редактирования"
                 ></button>
               </div>
@@ -45,7 +49,8 @@ function Main() {
             type="button"
             className="button-add"
             aria-label="кнопка добавления карточки на страницу"
-            onClick={handleAddPlaceClick}
+            // onClick={handleAddPlaceClick}
+            onClick={onAddPlace}
           ></button>
         </section>
         <section

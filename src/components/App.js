@@ -3,33 +3,49 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
 import ImagePopup from './ImagePopup.js';
+import { useState } from 'react';
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+
+  const handleAddPlaceClick = () => {
+    setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+  };
+
+  const handleEditProfileClick = () => {
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+  };
+
+  const handleEditAvatarClick = () => {
+    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+  }
+
   return (
     <div className='root'>
       <div className='page'>
         <Header />
-        <Main />
+        <Main 
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+        />
         <Footer />
-        <div className="popup popup_type_edit">
-        <div className="popup__container popup__container_type_edit">
-          <button
-            type="button"
-            className="popup__close-btn"
-            aria-label="кнопка закрытия модального окна"
-          ></button>
-          <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="form form_type_edit" name="profile-form" 
-          // novalidate
-          >
-            <input
+        <PopupWithForm 
+          title='Редактировать профиль'
+          name='edit'
+          isOpen={isEditProfilePopupOpen}
+          submitButtonText='Сохранить'
+        >
+          <input
               id="name-input"
               type="text"
               name="name"
               className="form__input form__input_name_name"
               placeholder="Имя"
-              // minlength="2"
-              // maxlength="40"
+              minLength="2"
+              maxLength="40"
               required
             />
             <span className="form__input-error name-input-error"></span>
@@ -39,34 +55,26 @@ function App() {
               name="job"
               className="form__input form__input_name_job"
               placeholder="О себе"
-              // minlength="2"
-              // maxlength="200"
+              minLength="2"
+              maxLength="200"
               required
             />
             <span className="form__input-error job-input-error"></span>
-            <button type="submit" className="form__send form__send_disabled">Сохранить</button>
-          </form>
-        </div>
-      </div>
-      <div className="popup popup_type_add">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close-btn"
-            aria-label="кнопка закрытия модального окна"
-          ></button>
-          <h2 className="popup__title">Новое место</h2>
-          <form className="form form_type_add" name="add-form" 
-          // novalidate 
-          >
-            <input
+        </PopupWithForm>
+        <PopupWithForm
+          title='Новое место'
+          name='add'
+          isOpen={isAddPlacePopupOpen}
+          submitButtonText='Создать'
+        >
+          <input
             id="add-title-input"
               type="text"
               name="title"
               className="form__input form__input_name_title"
               placeholder="Название"
-              // minlength="2"
-              // maxlength="30"
+              minLength="2"
+              maxLength="30"
               required
             />
             <span className="form__input-error add-title-input-error"></span>
@@ -79,10 +87,7 @@ function App() {
               required
             />
             <span className="form__input-error add-url-input-error"></span>
-            <button type="submit" className="form__send form__send_disabled">Создать</button>
-          </form>
-        </div>
-      </div>
+        </PopupWithForm>
       <div className="popup popup_type_image">
         <div className="popup__container popup__container_type_image">
           <button
@@ -109,18 +114,13 @@ function App() {
           <form className="form form_type_delete"><button className="form__send">Да</button></form>
         </div>
       </div>
-      <div className="popup popup_type_avatar">
-        <div className="popup__container">
-          <button
-            type="button"
-            className="popup__close-btn"
-            aria-label="кнопка закрытия модального окна"
-          ></button>
-          <h2 className="popup__title">Обновить аватар</h2>
-          <form className="form form_type_avatar" name="edit-avatar" 
-          // novalidate
-          >
-            <input
+      <PopupWithForm
+        title="Обновить аватар"
+        name="avatar"
+        submitButtonText='Сохранить'
+        isOpen={isEditAvatarPopupOpen}
+      >
+        <input
             id="avatar-patch-url-input"
               type="url"
               name="avatar"
@@ -129,10 +129,7 @@ function App() {
               required
             />
             <span className="form__input-error avatar-patch-url-input-error"></span>
-            <button type="submit" className="form__send form__send_disabled">Сохранить</button>
-          </form>
-        </div>
-      </div>
+      </PopupWithForm>
       </div>
     </div>
   );
