@@ -1,9 +1,37 @@
 function Main() {
+  // const handleEditAvatarClick = document.querySelector('.profile__avatar');
+  // const handleEditProfileClick = document.querySelector('.button-edit').addEventListener('click', () => {
+  //   document.querySelector('.popup_type_add').classList.add('.popup_opened');
+  // });
+  // const handleAddPlaceClick = document.querySelector('.button-add');
+  // const handleEditProfileClick = () => {
+  //   document.querySelector('.popup_type_add').classList.add('popup_opened');
+  // };
+  const handleAddPlaceClick = () => {
+    document.querySelector('.button-add').addEventListener('click', () => {
+      document.querySelector('.popup_type_add').classList.add('popup_opened');
+    })
+  };
+
+  const handleEditProfileClick = () => {
+    document.querySelector('.button-edit').addEventListener('click', () => {
+      document.querySelector('.popup_type_edit').classList.add('popup_opened');
+    })
+  };
+
+  const handleEditAvatarClick = () => {
+    document.querySelector('.profile__avatar-wrapper').addEventListener('click', () => {
+      document.querySelector('.popup_type_avatar').classList.add('popup_opened');
+    })
+  };
+
     return (
-<main classNameName="content">
+<main className="content">
         <section className="profile">
           <div className="profile__wrapper">
-            <div className="profile__avatar-wrapper"><img
+            <div className="profile__avatar-wrapper"
+            onClick={handleEditAvatarClick}>
+              <img
               src="#"
               alt="аватар пользователя."
               className="profile__avatar"
@@ -14,6 +42,7 @@ function Main() {
                 <button
                   type="button"
                   className="button-edit"
+                  onClick={handleEditProfileClick}
                   aria-label="кнопка редактирования"
                 ></button>
               </div>
@@ -24,6 +53,7 @@ function Main() {
             type="button"
             className="button-add"
             aria-label="кнопка добавления карточки на страницу"
+            onClick={handleAddPlaceClick}
           ></button>
         </section>
         <section

@@ -9,7 +9,7 @@ function App() {
         <Header />
         <Main />
         <Footer />
-        {/* <div className="popup popup_type_edit">
+        <div className="popup popup_type_edit">
         <div className="popup__container popup__container_type_edit">
           <button
             type="button"
@@ -17,15 +17,17 @@ function App() {
             aria-label="кнопка закрытия модального окна"
           ></button>
           <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="form form_type_edit" name="profile-form" novalidate>
+          <form className="form form_type_edit" name="profile-form" 
+          // novalidate
+          >
             <input
               id="name-input"
               type="text"
               name="name"
               className="form__input form__input_name_name"
               placeholder="Имя"
-              minlength="2"
-              maxlength="40"
+              // minlength="2"
+              // maxlength="40"
               required
             />
             <span className="form__input-error name-input-error"></span>
@@ -35,8 +37,8 @@ function App() {
               name="job"
               className="form__input form__input_name_job"
               placeholder="О себе"
-              minlength="2"
-              maxlength="200"
+              // minlength="2"
+              // maxlength="200"
               required
             />
             <span className="form__input-error job-input-error"></span>
@@ -52,15 +54,17 @@ function App() {
             aria-label="кнопка закрытия модального окна"
           ></button>
           <h2 className="popup__title">Новое место</h2>
-          <form className="form form_type_add" name="add-form" novalidate >
+          <form className="form form_type_add" name="add-form" 
+          // novalidate 
+          >
             <input
             id="add-title-input"
               type="text"
               name="title"
               className="form__input form__input_name_title"
               placeholder="Название"
-              minlength="2"
-              maxlength="30"
+              // minlength="2"
+              // maxlength="30"
               required
             />
             <span className="form__input-error add-title-input-error"></span>
@@ -111,7 +115,9 @@ function App() {
             aria-label="кнопка закрытия модального окна"
           ></button>
           <h2 className="popup__title">Обновить аватар</h2>
-          <form className="form form_type_avatar" name="edit-avatar" novalidate>
+          <form className="form form_type_avatar" name="edit-avatar" 
+          // novalidate
+          >
             <input
             id="avatar-patch-url-input"
               type="url"
@@ -124,7 +130,7 @@ function App() {
             <button type="submit" className="form__send form__send_disabled">Сохранить</button>
           </form>
         </div>
-      </div> */}
+      </div>
       </div>
     </div>
   );
