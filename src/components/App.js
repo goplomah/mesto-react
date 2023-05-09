@@ -3,13 +3,28 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
+import api from "../utils/Api.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitCard()])
+    .then(([me, cards]) => {
+      setCurrentUser(me);
+      setCards(cards);
+    })
+    .catch((err) =>
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+  );
+  }, [])
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
@@ -34,7 +49,25 @@ function App() {
     setSelectedCard({});
   };
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+  }).catch((err) =>
+  console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+);
+  }
+
+  const handleCardDelete = (card) => {
+    api.removeCard(card._id).then(() => {
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    }).catch((err) =>
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+  );
+  }
+
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="root">
       <div className="page">
         <Header />
@@ -44,6 +77,9 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onClose={closeAllPopups}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          cards={cards}
         />
         <Footer />
         <PopupWithForm
@@ -130,6 +166,7 @@ function App() {
         </PopupWithForm>
       </div>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

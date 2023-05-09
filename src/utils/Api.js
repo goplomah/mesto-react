@@ -66,6 +66,10 @@ export class Api {
         .then(res => this._checkResponse(res))
     }
 
+    changeLikeCardStatus(_id, isLiked) {
+        return isLiked ? this.addLike(_id) : this.deleteLike(_id)
+    }
+
     removeCard(_id) {
         return fetch(`${this._dataBase}cards/${_id}`, {
             method: "DELETE",
@@ -81,6 +85,6 @@ const api = new Api({
       authorization: "4cedf714-dd26-4078-b00f-7c3db0c68c43",
       "Content-Type": "application/json"
     }
-  });
+  });   
 
 export default api;

@@ -1,7 +1,25 @@
-function Card({ card, onCardClick }) {
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { useContext } from "react";
+
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const handleCardClick = () => {
     onCardClick(card);
   };
+
+  const handleLikeClick = () => {
+    onCardLike(card);
+  }
+
+  const handleDeleteClick = () => {
+    onCardDelete(card);
+  }
+
+  const currentUser = useContext(CurrentUserContext);
+  const isOwn = card.owner._id === currentUser._id;
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  const cardLikeButtonClassName = ( 
+    `places__button-like ${isLiked && 'places__button-like_active'}` 
+  );
 
   return (
     <li className="places__item">
@@ -17,17 +35,21 @@ function Card({ card, onCardClick }) {
           <div className="places__wrapper-like">
             <button
               type="button"
-              className="places__button-like"
+              className={cardLikeButtonClassName}
               aria-label="кнопка лайка"
+              onClick={handleLikeClick}
             ></button>
             <p className="places__like-counter">{card.likes.length}</p>
           </div>
         </figcaption>
-        <button
-          type="button"
-          className="places__button-trash"
-          aria-label="кнопка удаления"
-        ></button>
+        {isOwn &&
+          <button
+            type="button"
+            className="places__button-trash"
+            onClick={handleDeleteClick} 
+            aria-label="кнопка удаления"
+          ></button>
+        }
       </figure>
     </li>
   );
