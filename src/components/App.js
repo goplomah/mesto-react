@@ -6,6 +6,7 @@ import ImagePopup from "./ImagePopup.js";
 import { useEffect, useState } from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
 import api from "../utils/Api.js";
+import EditProfilePopup from "./EditProfilePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -66,6 +67,15 @@ function App() {
   );
   }
 
+  const handleUpdateUser = ({name, about}) => {
+    api.setUserInfo({name, job: about}).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    }).catch((err) =>
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+  );
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="root">
@@ -82,36 +92,11 @@ function App() {
           cards={cards}
         />
         <Footer />
-        <PopupWithForm
-          title="Редактировать профиль"
-          name="edit"
-          isOpen={isEditProfilePopupOpen}
-          submitButtonText="Сохранить"
-          onClose={closeAllPopups}
-        >
-          <input
-            id="name-input"
-            type="text"
-            name="name"
-            className="form__input form__input_name_name"
-            placeholder="Имя"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="form__input-error name-input-error"></span>
-          <input
-            id="job-input"
-            type="text"
-            name="job"
-            className="form__input form__input_name_job"
-            placeholder="О себе"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="form__input-error job-input-error"></span>
-        </PopupWithForm>
+        <EditProfilePopup 
+        isOpen={isEditProfilePopupOpen} 
+        onClose={closeAllPopups} 
+        onUpdateUser={handleUpdateUser}
+        /> 
         <PopupWithForm
           title="Новое место"
           name="add"
