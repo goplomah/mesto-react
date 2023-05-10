@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
 import api from "../utils/Api.js";
 import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -76,6 +77,15 @@ function App() {
   );
   }
 
+  const handleUpdateAvatar = ({avatar}) => {
+    api.updateAvatar({avatar}).then((res) => {
+      setCurrentUser(res);
+      closeAllPopups();
+    }).catch((err) =>
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+  );
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="root">
@@ -132,23 +142,11 @@ function App() {
           title="Вы уверены?"
           submitButtonText="Да"
         />
-        <PopupWithForm
-          title="Обновить аватар"
-          name="avatar"
-          submitButtonText="Сохранить"
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        >
-          <input
-            id="avatar-patch-url-input"
-            type="url"
-            name="avatar"
-            className="form__input form__input_name_link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__input-error avatar-patch-url-input-error"></span>
-        </PopupWithForm>
+        <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+         />
       </div>
     </div>
     </CurrentUserContext.Provider>
