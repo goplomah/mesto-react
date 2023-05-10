@@ -20,7 +20,7 @@ function App() {
 
   const handleCatchError = (err) => {
     console.log(`Упс...Ошибка получения данных с сервера: ${err}`);
-  }
+  };
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitCard()])
