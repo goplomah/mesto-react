@@ -1,7 +1,7 @@
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
+// import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import { useEffect, useState } from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
@@ -18,15 +18,17 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
+  const handleCatchError = (err) => {
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`);
+  }
+
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitCard()])
     .then(([me, cards]) => {
       setCurrentUser(me);
       setCards(cards);
     })
-    .catch((err) =>
-    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-  );
+    .catch(handleCatchError);
   }, [])
 
   const handleAddPlaceClick = () => {
@@ -56,44 +58,34 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-  }).catch((err) =>
-  console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-);
+  }).catch(handleCatchError);
   }
 
   const handleCardDelete = (card) => {
     api.removeCard(card._id).then(() => {
       setCards((state) => state.filter((c) => c._id !== card._id));
-    }).catch((err) =>
-    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-  );
+    }).catch(handleCatchError);
   }
 
   const handleUpdateUser = ({name, about}) => {
     api.setUserInfo({name, job: about}).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
-    }).catch((err) =>
-    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-  );
+    }).catch(handleCatchError);
   }
 
   const handleUpdateAvatar = ({avatar}) => {
     api.updateAvatar({avatar}).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
-    }).catch((err) =>
-    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-  );
+    }).catch(handleCatchError);
   }
 
   const handleAddPlaceSubmit = ({name, link}) => {
     api.addCard({title: name, link}).then((res) => {
       setCards([res, ...cards]);
       closeAllPopups();
-    }).catch((err) =>
-    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
-  );
+    }).catch(handleCatchError);
   }
 
   return (
@@ -122,13 +114,17 @@ function App() {
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         />
-        <ImagePopup name="image" onClose={closeAllPopups} card={selectedCard} />
-        <PopupWithForm
+        <ImagePopup 
+        name="image" 
+        onClose={closeAllPopups} 
+        card={selectedCard} 
+        />
+        {/* <PopupWithForm
           name="delete"
           onClose={closeAllPopups}
           title="Вы уверены?"
           submitButtonText="Да"
-        />
+        /> */}
         <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
