@@ -8,6 +8,7 @@ import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
 import api from "../utils/Api.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -86,6 +87,15 @@ function App() {
   );
   }
 
+  const handleAddPlaceSubmit = ({name, link}) => {
+    api.addCard({title: name, link}).then((res) => {
+      setCards([res, ...cards]);
+      closeAllPopups();
+    }).catch((err) =>
+    console.log(`Упс...Ошибка получения данных с сервера: ${err}`)
+  );
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
     <div className="root">
@@ -107,34 +117,11 @@ function App() {
         onClose={closeAllPopups} 
         onUpdateUser={handleUpdateUser}
         /> 
-        <PopupWithForm
-          title="Новое место"
-          name="add"
-          isOpen={isAddPlacePopupOpen}
-          submitButtonText="Создать"
-          onClose={closeAllPopups}
-        >
-          <input
-            id="add-title-input"
-            type="text"
-            name="title"
-            className="form__input form__input_name_title"
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="form__input-error add-title-input-error"></span>
-          <input
-            id="add-url-input"
-            type="url"
-            name="link"
-            className="form__input form__input_name_link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__input-error add-url-input-error"></span>
-        </PopupWithForm>
+        <AddPlacePopup 
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+        />
         <ImagePopup name="image" onClose={closeAllPopups} card={selectedCard} />
         <PopupWithForm
           name="delete"
